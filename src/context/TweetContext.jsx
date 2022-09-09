@@ -10,6 +10,7 @@ const TweetContextProvider = ({ children }) => {
     const [imagePreview, setImagePreview] = useState("")
     const [callFeed, setCallFeed] = useState(false)
     const [feedData, setFeedData] = useState(null)
+    const [sending, setSending] = useState(false)
 
     const tweetData = {
         text,
@@ -21,7 +22,9 @@ const TweetContextProvider = ({ children }) => {
         callFeed,
         setCallFeed,
         feedData, 
-        setFeedData
+        setFeedData,
+        sending,
+        setSending
     }
 
     return(
