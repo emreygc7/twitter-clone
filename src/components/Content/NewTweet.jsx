@@ -6,12 +6,14 @@ import { useTweet } from '../../context/TweetContext'
 
 const NewTweet = () => {
 
-    const {text, setText, postImage, setPostImage, setImagePreview, callFeed, setCallFeed} = useTweet()
+    const {text, setText, postImage, setPostImage, setImagePreview, callFeed, setCallFeed, sending, setSending} = useTweet()
  
-    let downloadURL = "noimg"; 
+    let downloadURL = "noimg";
+    
 
     const sendTweet = async () => { 
         try{
+            setSending(true)
             if(postImage !== ""){
                 const storage = getStorage();
                 const metadata = {
@@ -32,7 +34,8 @@ const NewTweet = () => {
                 tweetImage: downloadURL !== "noimg" ? downloadURL : "noimg"
             })
             setText("")
-            downloadURL = "noimg";   
+            downloadURL = "noimg"; 
+            setSending(false)  
             setImagePreview("")
             setCallFeed(!callFeed)
         }catch(e){
@@ -40,7 +43,7 @@ const NewTweet = () => {
         }
       }
   return (
-    <button disabled={text === "" && postImage === "" } className={`w-20 h-9 rounded-full text-white mr-4 font-bold ${text === "" && postImage === "" ? "bg-blue/70" : "bg-blue"} `} onClick={sendTweet}>Tweet</button>
+    <button disabled={(text === "" && postImage === "") || sending } className={`w-20 h-9 rounded-full text-white mr-4 font-bold ${text === "" && postImage === "" || sending ? "bg-blue/70" : "bg-blue"} `} onClick={sendTweet}>Tweet</button>
   )
 }
 
